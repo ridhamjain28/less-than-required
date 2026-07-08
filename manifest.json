@@ -17,6 +17,10 @@
             "matches": [
                 "<all_urls>"
             ],
+            "all_frames": true,
+            "css": [
+                "src/content_styles.css"
+            ],
             "js": [
                 "src/utils/pdf-lib.min.js",
                 "src/utils/compressor.js",

@@ -1,135 +1,60 @@
-# ⚡ Less Than Required
+<div align="center">
+  <img src="src/icons/icon128.png" alt="Less Than Required Logo" width="128"/>
 
-A Chrome extension that automatically detects file upload size limits on websites and helps you compress files to meet those requirements – all without leaving the page.
+  # Less Than Required
 
-![Chrome Extension](https://img.shields.io/badge/Chrome-Extension-blue?logo=googlechrome)
-![Manifest V3](https://img.shields.io/badge/Manifest-V3-green)
-![License](https://img.shields.io/badge/License-MIT-yellow)
+  **The ultimate offline file compressor & resizer for government forms.**
 
----
+  [![Chrome Web Store](https://img.shields.io/badge/Chrome_Web_Store-Install_Now-blue?style=for-the-badge&logo=googlechrome&logoColor=white)](#) 
+  [![Privacy](https://img.shields.io/badge/Privacy-100%25_Offline-success?style=for-the-badge)](#)
+  [![Version](https://img.shields.io/badge/Version-1.1.0-orange?style=for-the-badge)](#)
 
-## ✨ Features
+</div>
 
-### 🔍 Smart Limit Detection
-- Automatically scans page content (titles, headers, labels) for file size limits
-- Detects patterns like "Max 5MB", "Limit: 2MB", "< 10MB"
-- Shows detected limit in the notification
+## 🚀 The Problem
 
-### 🗜️ Intelligent Compression
-- **Images**: Compresses via JPEG engine, converts back to original format (PNG stays PNG)
-- **PDFs**: Basic optimization using pdf-lib
-- **Quality Control**: Choose High (90%), Medium (70%), or Low (50%) compression
+Have you ever tried to fill out a government form, only to be stopped because your passport photo was `55KB` instead of `50KB`? Or your signature was `JPEG` instead of `JPG`? Or the dimensions were `300x300` instead of `200x230`?
 
-### 🎨 Beautiful UI
-- Modern gradient design with smooth animations
-- Non-intrusive toast notifications
-- Stats dashboard showing Before/After/% Saved
-- One-click download of compressed files
+Government websites have notoriously strict, archaic file upload requirements, and their custom upload portals often reject valid files for arbitrary reasons.
 
-### 🚀 How It Works
-1. **Upload a file** on any website with a file size limit
-2. **Extension detects** if your file exceeds the limit
-3. **Click "Compress"** – file is optimized instantly
-4. **Done!** The compressed file replaces the original in the upload form
+## 💡 The Solution
 
----
+**Less Than Required** is a simple, powerful Chrome extension that fixes locally selected photos, signatures, and PDFs to perfectly match upload requirements, **without ever sending your files to a server.**
+
+### ✨ Features
+
+*   🎯 **Smart Presets**: One-click formatting for common requirements (e.g., Passport Photo: 200x230, Max 50KB).
+*   🛠️ **Custom Tuning**: Set exact maximum file sizes (in KB), dimensions (Width x Height), and formats (JPG, PNG, PDF).
+*   🔒 **100% Offline & Private**: All resizing, cropping, and compression happens locally in your browser. Your sensitive documents (passports, signatures) never leave your computer.
+*   🔄 **Bypass Restrictive Uploaders**: Sometimes auto-replacing files doesn't work on weird custom upload systems. Our extension allows you to manually process the file, download the perfectly formatted version, and easily upload it yourself.
+*   ⚡ **Drag & Drop Auto-Compression**: For supported websites (like Google Forms), just drag and drop your file, and the extension compresses it on the fly before it even hits the upload field.
+
+## 📸 How it Works
+
+1.  **Click the Extension Icon** when you encounter an annoying file upload limit.
+2.  **Select a Preset** (Passport, Signature, Document) or enter your **Custom Requirements**.
+3.  **Upload your file** into the extension.
+4.  The extension instantly processes it and triggers a download of the fixed file.
+5.  **Upload the fixed file** to the government form. Done!
 
 ## 📦 Installation
 
-### From Source (Developer Mode)
+*(Currently in development)*
 
-1. **Clone this repository**
-   ```bash
-   git clone https://github.com/ridhamjain28/less-than-required.git
-   ```
+1.  Download or clone this repository: `git clone https://github.com/ridhamjain28/less-than-required.git`
+2.  Open Chrome and navigate to `chrome://extensions/`
+3.  Enable **Developer mode** in the top right corner.
+4.  Click **Load unpacked** and select the `less-than-required` folder.
+5.  Pin the extension to your toolbar for easy access!
 
-2. **Open Chrome Extensions**
-   - Navigate to `chrome://extensions/`
-   - Enable **Developer mode** (toggle in top right)
+## 📜 Version History
 
-3. **Load the extension**
-   - Click **"Load unpacked"**
-   - Select the `less-than-required` folder
-
-4. **Pin the extension** for easy access
-
----
-
-## 🎯 Usage
-
-### Popup (Manual Compression)
-1. Click the extension icon in your toolbar
-2. Drag & drop any image or PDF
-3. Select compression quality
-4. Download the compressed file
-
-### On Websites (Automatic)
-1. Go to any website with a file upload (e.g., form with "Max 5MB" limit)
-2. Select a file that's too large
-3. A notification appears: "Large File Detected!"
-4. Click **"🔥 Compress"**
-5. The file is automatically replaced with the compressed version
-6. Optionally click **"⬇️ Save Copy"** to download
-
----
-
-## 🛠️ Tech Stack
-
-- **Manifest V3** – Latest Chrome extension standard
-- **Vanilla JavaScript** – No frameworks, lightweight
-- **Canvas API** – Client-side image compression
-- **pdf-lib** – PDF manipulation
-- **Chrome Storage API** – Saves user preferences
-
----
-
-## 📁 Project Structure
-
-```
-less-than-required/
-├── manifest.json          # Extension configuration
-├── src/
-│   ├── popup.html         # Extension popup UI
-│   ├── popup.js           # Popup logic
-│   ├── content_script.js  # Injected page script
-│   ├── background.js      # Service worker
-│   └── utils/
-│       ├── compressor.js  # Image/PDF compression
-│       └── pdf-lib.min.js # PDF library
-├── test.html              # Local test page
-└── README.md
-```
-
----
-
-## 🔧 Configuration
-
-Quality settings are saved automatically:
-- **High (90%)** – Minimal quality loss, larger files
-- **Medium (70%)** – Balanced (recommended)
-- **Low (50%)** – Maximum compression, some quality loss
-
----
+Curious about how this project has evolved? Check out our [Timeline](timeline.md).
 
 ## 🤝 Contributing
 
-Contributions are welcome! Feel free to:
-- Report bugs
-- Suggest features
-- Submit pull requests
+Contributions, issues, and feature requests are welcome! Feel free to check the [issues page](https://github.com/ridhamjain28/less-than-required/issues).
 
----
+## 📝 License
 
-## 📄 License
-
-MIT License – feel free to use and modify.
-
----
-
-## 👨‍💻 Author
-
-Made with ❤️ by [Ridham Jain](https://github.com/ridhamjain28)
-
----
-
-**⭐ Star this repo if you find it useful!**
+This project is [MIT](https://choosealicense.com/licenses/mit/) licensed.

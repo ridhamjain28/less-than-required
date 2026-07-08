@@ -1,4 +1,3 @@
-// Popup logic with settings support
 const dropZone = document.getElementById('dropZone');
 const fileInput = document.getElementById('fileInput');
 const resultCard = document.getElementById('result');
@@ -7,21 +6,45 @@ const compSizeSpan = document.getElementById('compSize');
 const savedPercentSpan = document.getElementById('savedPercent');
 const downloadLink = document.getElementById('downloadLink');
 const resetBtn = document.getElementById('resetBtn');
-const qualitySelect = document.getElementById('qualitySelect');
+
+const presetSelect = document.getElementById('presetSelect');
+const customSettings = document.getElementById('customSettings');
+const targetKB = document.getElementById('targetKB');
+const targetWidth = document.getElementById('targetWidth');
+const targetHeight = document.getElementById('targetHeight');
+const targetFormat = document.getElementById('targetFormat');
 
 // State
 let isCompressing = false;
 
-// Load saved quality preference
-chrome.storage?.sync?.get(['quality'], (result) => {
-    if (result.quality) {
-        qualitySelect.value = result.quality;
-    }
-});
+// Presets Configuration
+const PRESETS = {
+    'passport': { kb: 45, width: 200, height: 230, format: 'image/jpeg' },
+    'signature': { kb: 18, width: 140, height: 60, format: 'image/jpeg' },
+    'doc_pdf': { kb: 480, width: null, height: null, format: 'auto' }
+};
 
-// Save quality preference
-qualitySelect.addEventListener('change', () => {
-    chrome.storage?.sync?.set({ quality: qualitySelect.value });
+// UI Logic
+presetSelect.addEventListener('change', () => {
+    const val = presetSelect.value;
+    if (val === 'custom') {
+        customSettings.classList.add('show');
+    } else {
+        customSettings.classList.remove('show');
+    }
+    
+    // Auto-fill custom fields based on preset if it's a known preset
+    if (PRESETS[val]) {
+        targetKB.value = PRESETS[val].kb || '';
+        targetWidth.value = PRESETS[val].width || '';
+        targetHeight.value = PRESETS[val].height || '';
+        targetFormat.value = PRESETS[val].format || 'auto';
+    } else if (val === 'auto') {
+        targetKB.value = '';
+        targetWidth.value = '';
+        targetHeight.value = '';
+        targetFormat.value = 'auto';
+    }
 });
 
 // Drag interactions
@@ -77,8 +100,19 @@ async function handleFile(file) {
     dropZone.querySelector('.drop-text').textContent = 'Compressing...';
 
     try {
-        const quality = parseFloat(qualitySelect.value);
-        const compressed = await LTR_Compressor.compressImage(file, quality);
+        const preset = presetSelect.value;
+        const options = {};
+        
+        if (preset === 'auto') {
+            options.quality = 0.7; // default auto behavior
+        } else {
+            options.targetKB = targetKB.value ? parseInt(targetKB.value, 10) : null;
+            options.width = targetWidth.value ? parseInt(targetWidth.value, 10) : null;
+            options.height = targetHeight.value ? parseInt(targetHeight.value, 10) : null;
+            options.format = targetFormat.value === 'auto' ? null : targetFormat.value;
+        }
+
+        const compressed = await LTR_Compressor.processFile(file, options);
 
         // Calculate stats
         const savedBytes = file.size - compressed.size;
