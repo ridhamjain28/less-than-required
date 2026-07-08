@@ -190,15 +190,15 @@ function showCompressNotification(target, file, limitBytes, isDrop = false) {
         btn.disabled = true;
 
         try {
-            // Get quality from storage (defaults to 0.7/medium if not set)
-            const storageData = await new Promise(resolve => {
-                chrome.storage?.sync?.get(['quality'], (result) => {
-                    resolve(result || {});
-                });
-            });
-            const quality = parseFloat(storageData.quality || 0.7);
+            const options = {
+                targetKB: Math.max(10, Math.floor(limitBytes / 1024))
+            };
 
-            const compressed = await LTR_Compressor.compressImage(file, quality);
+            const compressed = await LTR_Compressor.processFile(file, options);
+            
+            if (compressed.size > limitBytes) {
+                throw new Error('Could not compress below required size.');
+            }
             
             if (isDrop) {
                 simulateDrop(target, compressed);
@@ -210,11 +210,11 @@ function showCompressNotification(target, file, limitBytes, isDrop = false) {
 
             // Success state
             wrapper.className = 'ltr-notification-toast success';
-            icon.textContent = '🎉';
+            icon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>';
             title.textContent = 'Compressed Successfully!';
             subtitle.textContent = `Saved ${savedPct}% • Now ${formatBytes(compressed.size)}`;
 
-            btn.textContent = '⬇️ Save Copy';
+            btn.textContent = 'Save Copy';
             btn.disabled = false;
 
             btn.onclick = () => {
@@ -239,10 +239,18 @@ function showCompressNotification(target, file, limitBytes, isDrop = false) {
         } catch (err) {
             console.error(err);
             wrapper.className = 'ltr-notification-toast error';
+            icon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg>';
             title.textContent = 'Compression Failed';
-            subtitle.textContent = err.message || 'Unknown error';
-            btn.textContent = 'Retry';
-            btn.disabled = false;
+            subtitle.textContent = err.message || 'File too large to compress further.';
+            btn.style.display = 'none';
+            
+            // Auto-dismiss error after 10 seconds
+            setTimeout(() => {
+                if (wrapper.parentNode) {
+                    wrapper.classList.add('dismissing');
+                    setTimeout(() => wrapper.remove(), 300);
+                }
+            }, 10000);
         }
     };
 
