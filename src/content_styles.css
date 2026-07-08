@@ -1,42 +1,52 @@
-/* Styles for Less Than Required content script notifications */
+/* Styles for Less Than Required content script notifications - Shadcn UI theme */
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
 
 :root {
-    --ltr-space-2: 8px;
-    --ltr-space-3: 12px;
-    --ltr-space-4: 16px;
-    --ltr-space-5: 20px;
-    --ltr-radius-lg: 12px;
-    --ltr-radius-xl: 16px;
+    --ltr-bg-base: hsl(0, 0%, 100%);
+    --ltr-border: hsl(214.3, 31.8%, 91.4%);
+    --ltr-text-primary: hsl(222.2, 84%, 4.9%);
+    --ltr-text-secondary: hsl(215.4, 16.3%, 46.9%);
+    --ltr-radius: 0.5rem;
     
-    --ltr-bg-base: rgba(17, 24, 39, 0.95);
-    --ltr-border: rgba(255, 255, 255, 0.1);
-    --ltr-text-primary: #f9fafb;
-    --ltr-text-secondary: #9ca3af;
+    --ltr-btn-bg: hsl(222.2, 47.4%, 11.2%);
+    --ltr-btn-text: hsl(210, 40%, 98%);
+    --ltr-btn-hover: hsl(222.2, 47.4%, 11.2%, 0.9);
     
-    --ltr-color-primary: #3b82f6;
-    --ltr-color-success: #10b981;
-    --ltr-color-error: #ef4444;
+    --ltr-color-success: hsl(142.1, 76.2%, 36.3%);
+    --ltr-color-error: hsl(0, 84.2%, 60.2%);
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --ltr-bg-base: hsl(222.2, 84%, 4.9%);
+        --ltr-border: hsl(217.2, 32.6%, 17.5%);
+        --ltr-text-primary: hsl(210, 40%, 98%);
+        --ltr-text-secondary: hsl(215, 20.2%, 65.1%);
+        
+        --ltr-btn-bg: hsl(210, 40%, 98%);
+        --ltr-btn-text: hsl(222.2, 47.4%, 11.2%);
+        --ltr-btn-hover: hsl(210, 40%, 98%, 0.9);
+    }
 }
 
 @keyframes ltr-slide-in {
     from {
-        transform: translate(100%, 0);
+        transform: translateX(100%);
         opacity: 0;
     }
     to {
-        transform: translate(0, 0);
+        transform: translateX(0);
         opacity: 1;
     }
 }
 
 @keyframes ltr-slide-out {
     from {
-        transform: translate(0, 0);
+        transform: translateX(0);
         opacity: 1;
     }
     to {
-        transform: translate(100%, 0);
+        transform: translateX(100%);
         opacity: 0;
     }
 }
@@ -46,50 +56,28 @@
     top: 24px;
     right: 24px;
     background: var(--ltr-bg-base);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
-    padding: var(--ltr-space-4) var(--ltr-space-5);
-    border-radius: var(--ltr-radius-xl);
+    padding: 16px 20px;
+    border-radius: var(--ltr-radius);
     border: 1px solid var(--ltr-border);
-    box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
     display: flex;
     align-items: center;
-    gap: var(--ltr-space-4);
+    gap: 16px;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     font-size: 14px;
     z-index: 2147483647;
-    animation: ltr-slide-in 0.5s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: ltr-slide-in 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     color: var(--ltr-text-primary);
-    max-width: 380px;
+    max-width: 420px;
     box-sizing: border-box;
-    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-.ltr-notification-toast::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
-    width: 4px;
-    border-radius: var(--ltr-radius-xl) 0 0 var(--ltr-radius-xl);
-    background: var(--ltr-color-primary);
-}
-
-.ltr-notification-toast.success::before {
-    background: var(--ltr-color-success);
-}
-
-.ltr-notification-toast.error::before {
-    background: var(--ltr-color-error);
 }
 
 .ltr-notification-toast.dismissing {
-    animation: ltr-slide-out 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    animation: ltr-slide-out 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
 .ltr-notification-icon {
-    font-size: 20px;
+    font-size: 18px;
     flex-shrink: 0;
     user-select: none;
     display: flex;
@@ -98,7 +86,7 @@
     width: 32px;
     height: 32px;
     border-radius: 50%;
-    background: rgba(255,255,255,0.05);
+    background: rgba(128, 128, 128, 0.1);
 }
 
 .ltr-notification-toast.success .ltr-notification-icon {
@@ -126,7 +114,7 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    line-height: 1.4;
+    line-height: 1.2;
 }
 
 .ltr-notification-subtitle {
@@ -135,60 +123,56 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    line-height: 1.4;
+    line-height: 1.2;
 }
 
 .ltr-notification-actions {
     display: flex;
-    gap: var(--ltr-space-2);
+    gap: 8px;
     flex-shrink: 0;
 }
 
 .ltr-notification-btn {
-    background: rgba(255, 255, 255, 0.1);
-    color: var(--ltr-text-primary);
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    padding: 8px 16px;
-    border-radius: var(--ltr-radius-lg);
-    cursor: pointer;
-    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    border-radius: var(--ltr-radius);
     font-size: 13px;
+    font-weight: 500;
+    height: 32px;
+    padding: 0 12px;
+    background: var(--ltr-btn-bg);
+    color: var(--ltr-btn-text);
+    border: none;
+    cursor: pointer;
     font-family: inherit;
-    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: opacity 0.2s;
     outline: none;
 }
 
 .ltr-notification-btn:hover {
-    background: rgba(255, 255, 255, 0.15);
-    border-color: rgba(255, 255, 255, 0.2);
+    opacity: 0.9;
 }
 
 .ltr-notification-btn:active {
-    transform: scale(0.96);
+    transform: scale(0.98);
 }
 
 .ltr-notification-btn:disabled {
     opacity: 0.5;
     cursor: not-allowed;
-    transform: none !important;
+    pointer-events: none;
 }
 
 .success .ltr-notification-btn {
     background: var(--ltr-color-success);
-    color: #fff;
-    border: none;
-}
-.success .ltr-notification-btn:hover {
-    background: #059669; /* hover success */
+    color: white;
 }
 
 .error .ltr-notification-btn {
     background: var(--ltr-color-error);
-    color: #fff;
-    border: none;
-}
-.error .ltr-notification-btn:hover {
-    background: #dc2626; /* hover error */
+    color: white;
 }
 
 .ltr-notification-close {
@@ -196,18 +180,19 @@
     border: none;
     color: var(--ltr-text-secondary);
     cursor: pointer;
-    font-size: 18px;
+    font-size: 16px;
     padding: 4px;
-    border-radius: 4px;
-    transition: color 0.2s, background 0.2s;
+    border-radius: var(--ltr-radius);
+    transition: background 0.2s;
     line-height: 1;
     display: flex;
     align-items: center;
     justify-content: center;
     margin-left: 4px;
+    opacity: 0.7;
 }
 
 .ltr-notification-close:hover {
-    color: var(--ltr-text-primary);
-    background: rgba(255,255,255,0.1);
+    opacity: 1;
+    background: var(--ltr-border);
 }
