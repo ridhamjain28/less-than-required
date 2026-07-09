@@ -37,15 +37,6 @@ Government websites have notoriously strict, archaic file upload requirements, a
 4.  The extension instantly processes it and triggers a download of the fixed file.
 5.  **Upload the fixed file** to the government form. Done!
 
-## 📦 Installation
-
-*(Currently in development)*
-
-1.  Download or clone this repository: `git clone https://github.com/ridhamjain28/less-than-required.git`
-2.  Open Chrome and navigate to `chrome://extensions/`
-3.  Enable **Developer mode** in the top right corner.
-4.  Click **Load unpacked** and select the `less-than-required` folder.
-5.  Pin the extension to your toolbar for easy access!
 
 ## 📜 Version History
 
