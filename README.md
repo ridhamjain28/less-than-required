@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="src/icons/icon128.png" alt="Less Than Required Logo" width="128"/>
+  <img src="icon128.png" alt="Less Than Required Logo" width="128"/>
 
   # Less Than Required
 
