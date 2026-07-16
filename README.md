@@ -7,7 +7,7 @@
 
   [![Chrome Web Store](https://img.shields.io/badge/Chrome_Web_Store-Install_Now-blue?style=for-the-badge&logo=googlechrome&logoColor=white)](#) 
   [![Privacy](https://img.shields.io/badge/Privacy-100%25_Offline-success?style=for-the-badge)](#)
-  [![Version](https://img.shields.io/badge/Version-1.1.0-orange?style=for-the-badge)](#)
+  [![Version](https://img.shields.io/badge/Version-1.2.0-orange?style=for-the-badge)](#)
 
 </div>
 
